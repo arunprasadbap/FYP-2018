@@ -6,14 +6,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-           <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Add User
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="adduser.php">Add Student/Staff</a>
-                <a class="dropdown-item" href="adduser1.php">Add Canteen Staff</a>
-              </div>
+           <li class="nav-item">
+              <a class="nav-link" href="adduser.php">Add User</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="viewuser.php">View User</a>
