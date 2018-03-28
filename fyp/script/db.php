@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$dbusername = "id5215770_adminrat";
-$dbpassword = "cashlesscanteenrat";
-$dbname = "id5215770_cashlesscanteenswin";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "canteen";
 $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname) or die($mysqli->error);
 ?>
