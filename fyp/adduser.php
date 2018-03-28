@@ -45,7 +45,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+									<input type="text" class="form-control" name="name" id="name"  placeholder="Enter Name"/>
 								</div>
 							</div>
 						</div>
@@ -55,7 +55,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+									<input type="text" class="form-control" name="email" id="email"  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"  placeholder="Enter Email"/>
 								</div>
 							</div>
 						</div>
@@ -65,7 +65,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="userid" id="username"  placeholder="Enter your Username"/>
+									<input type="text" class="form-control" name="userid" id="username"  placeholder="Enter Username"/>
 								</div>
 							</div>
 						</div>
@@ -75,7 +75,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter Password"/>
 								</div>
 							</div>
 						</div>
@@ -85,7 +85,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm Password"/>
 								</div>
 							</div>
 						</div>
@@ -121,7 +121,7 @@ confirm_password.onkeyup = validatePassword;
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="jquery.min.js"></script>
+    <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 
   </body>
