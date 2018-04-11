@@ -1,6 +1,6 @@
 <?php
 
-function pagination($page,$limit,$adjacents,$total_pages,$targetpage,$k,$limit){
+function pagination($page,$limit,$adjacents,$total_pages,$targetpage,$k){
     if ($page == 0)
         $page = 1;                                              //if no page var is given, default to 1.
         $prev = $page - 1;                                      //previous page is page - 1
