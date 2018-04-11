@@ -1,4 +1,5 @@
 <?php session_start();
+
 if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
     include_once "script/pagination.php";
 
@@ -9,7 +10,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
     // Number adjacent pages should be shown on each side
     $adjacents = 3;
     $limit = 2;
-    $page = $_GET['page'];
+    $page = isset($_GET['page']) ? $_GET['page'] : 0 ;
 
     $k = isset($_GET['k']) ? $_GET['k'] : "";
     $searchString = "";
@@ -20,16 +21,14 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
 
     $totalCountInfo = mysqli_query($con, "select Count(*) as num from account $searchString");
     $total_pages = mysqli_fetch_assoc($totalCountInfo);
-    $total_pages = $total_pages[num]; //query for getting total number
+    $total_pages = $total_pages['num']; //query for getting total number
 
     $limitShow = $limit;
-
-
 
     if(isset($_GET['limit'])){
         $limit = $total_pages;
         if($_GET['limit'] != 'All')
-            $limit = $_GET['limit']; // Number of row  to show
+            $limit = $_GET['limit']; // Number of row you want to show
 
         $limitShow =  $_GET['limit'];
     }
@@ -47,7 +46,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
         $data[] = $row;
     }
 
-    $pagination = pagination($page, $limit, $adjacents, $total_pages, $targetpage, $k,$limit);
+    $pagination = pagination($page, $limit, $adjacents, $total_pages, $targetpage, $k);
 
     $showList = array(1,2,3,'All');
 
@@ -204,7 +203,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-      
+       
 
     </body>
     </html>
