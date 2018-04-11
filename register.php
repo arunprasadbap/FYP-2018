@@ -17,7 +17,7 @@ if ($result->num_rows > 0){
 	$_SESSION['error'] = "ID already exists!"; 
 }else{
    
-	$sql = "INSERT INTO account (userid,username,userpass,email) VALUES ('$id','$name','$pass','$email')";
+	$sql = "INSERT INTO account (userid,username,userpass,email,role) VALUES ('$id','$name','$pass','$email','2')";
 	
 	if ($mysqli->query($sql)==TRUE){
 	 	$_SESSION['success'] = 'Registration Successful!';
