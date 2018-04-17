@@ -1,0 +1,44 @@
+div.gallery {
+    margin: 11px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 250px;
+	
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+h4 {
+	
+	
+	font-size: 1.5em;
+}
+div.desc {
+    padding: 10px;
+    text-align: center;
+	   
+
+}
+#image{
+	
+	
+	height: 200px;
+	
+}
+#image1{
+	
+	
+	height: 200px;
+	
+}
+#button {
+	  width: 210px;
+	
+ 
+}
