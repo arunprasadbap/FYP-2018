@@ -90,9 +90,63 @@ if(isset($_SESSION['role']) && $_SESSION['role'] ==1);
     </div>
   </div>
 <p align="center"><button type="button" name class="btn btn-default btn-lg" id="submitbutton" data-toggle="modal" data-target="#myModal" disabled >Submit</button></p>
-  
+  <p align="center"><button type="button" name class="btn btn-info btn-lg" id="history" data-toggle="modal" data-target="#myModal2" >Money Transaction History</button></p>
 </form>
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+       
+          <h2 class="modal-title">Money Transaction History</h2>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+    <table class="table">
+	<thead>
+    <tr>
+      <th>Date/Time</th>
+      <th>User ID</th>
+	  <th>UserName</th>
+      <th>Amount</th>
+	   <th>By</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php 
 
+
+$fetch=mysqli_query($mysqli,"SELECT * FROM amounthistory ORDER BY time DESC");
+while($row=mysqli_fetch_assoc($fetch)){ 
+
+
+ ?>
+      <tr>
+	  <td><?php echo $row['time']; ?></td>
+        <td><?php echo $row['userid']; ?></td>
+		<td><?php echo $row['username']; ?></td>
+        <td><?php echo $row['amount']; ?></td>
+		<td><?php echo $row['updater']; ?></td>
+       
+      </tr>
+	  <?php }  ?>
+  </tbody>
+	
+	
+	
+	</table>
+</div>
+    
+        </div>
+        <div class="modal-footer">
+		
+          <button type="button" class="btn btn-danger" data-dismiss="modal">close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 </div>
 
 
