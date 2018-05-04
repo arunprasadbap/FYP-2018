@@ -6,6 +6,17 @@
 $con = mysqli_connect("localhost","root","","canteen");
 $rs=mysqli_query($con,"SELECT * FROM transection_history WHERE formid = '$_SESSION[idnum]'");
 
+$userid=$_SESSION['idnum'];
+if(isset($_POST['deletehistory'])){
+	
+	if(mysqli_query($con,"DELETE FROM transection_history WHERE formid='$userid'")){
+		header("location:transection_history.php");
+		
+	}
+	
+	
+}
+
 
 $data=array();
 while($row=mysqli_fetch_assoc($rs)){
@@ -78,11 +89,37 @@ while($row=mysqli_fetch_assoc($rs)){
                 <?php } ?>
                 </tbody>
             </table>
+     
+            <p align="center"><button type="button" class="btn btn-danger btn-block"  style="width:250px;height:60px;" data-toggle="modal" data-target="#delete"  >CLEAR TRANSACTION HISTORY</button>
+            </p>
+                
+            
         </div>
        
     </div>
     <!-- Trigger the modal with a button -->
-
+<div class="modal fade" id="delete" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+       
+          <h2 class="modal-title">Clear Order History</h2>
+        </div>
+        <div class="modal-body">
+          <p><b>Are you sure you want to clear your order history?</b></p>
+        </div>
+        <div class="modal-footer">
+		<form action="transection_history.php" method="post">
+		<button type="submit" name="deletehistory" class="btn btn-primary">YES</button>
+		</form>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">NO</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
         
 
         <!-- Bootstrap core JavaScript -->
