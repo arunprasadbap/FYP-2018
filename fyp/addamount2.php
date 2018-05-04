@@ -27,7 +27,12 @@ if(isset($_POST['viewamount'])){
 		header("Location:addamount.php");
 		
 	}
+	//$fetch=mysqli_query($mysqli,"SELECT * FROM account WHERE userid='$id'");
+	//$row=mysqli_fetch_assoc($fetch);
 	
+	
+	//$name=$row['username'];
+	//$balance=$row['amount'];
 	
 	
 	
