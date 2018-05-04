@@ -87,7 +87,7 @@
             <div class="col-sm-4 col-xs-4 col-width">
                 <div class="thumbnail">
                     <div class="secrow">
-                        <a href="" alt="Add Users">
+                        <a href="adduser.php" alt="Add Users">
                             <div class="caption">
                                 Add Users
                             </div>
@@ -99,7 +99,7 @@
             <div class="col-sm-4 col-xs-4 col-width">
                 <div class="thumbnail">
                     <div class="secrow">
-                        <a href="" alt="View Users">
+                        <a href="viewuser.php" alt="View Users">
                             <div class="caption">
                                 View Users
                             </div>
@@ -111,9 +111,9 @@
             <div class="col-sm-4 col-xs-4 col-width">
                 <div class="thumbnail">
                     <div class="secrow">
-                        <a href="" alt="Add Cards">
+                        <a href="addamount.php" alt="Add Cards">
                             <div class="caption">
-                                Add Cards
+                                Add Credits
                             </div>
                             <img src="img/icons/cards.png" class="img-responsive dasboard-img">
                         </a>
@@ -147,7 +147,7 @@
             <div class="col-sm-4 col-xs-4 col-width">
                 <div class="thumbnail">
                     <div class="secrow">
-                        <a href="" alt="Logout">
+                        <a href="script/logout.php" alt="Logout">
                             <div class="caption">
                                 Logout
                             </div>
