@@ -16,10 +16,13 @@
 
     <!-- Custom styles for this template -->
     <link href="css/layout.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+     
 
   </head>
 
-  <body>
+  <body class="inner-body">
 
    <div class="login-form">
     <form action="script/login.php" method="post">
@@ -47,9 +50,9 @@
     </form>
     
 </div>
-
+<div style="text-align:center;margin-top:20px;"><h2 style=" text-shadow: 2px 2px #000000;color:#ffffff">TEAM RAT 2018</h2></div>
     <!-- Footer -->
-    <?php require 'footer.php'; ?>
+    
 
     <!-- Bootstrap core JavaScript -->
     <script src="jquery/jquery.min.js"></script>
