@@ -48,6 +48,7 @@ $date=$row['date'];
     $subject = "Order has been canceled";
     $message = "<h3>Dear " . $row['username'] . "</h3><br>";
     $message .= "<p>Sorry, your order has been canceled.</p><br><br><br>";
+    $message .= "<p>Your money RM ". $foodamount ."has been refunded.</p><br><br><br>";
     $message .= "<p>Regards,<br>Cashless Canteen</p>";
     send_email($row['email'], $message, $subject);
 //}
