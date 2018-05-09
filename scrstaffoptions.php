@@ -23,24 +23,27 @@ if (isset($_GET['idready'])){
 
 
 if(isset($_GET['idcancel'])){
-	$id=$_GET['idcancel'];
-$fetch=mysqli_query($mysqli,"SELECT * FROM orders WHERE userid='$id'");
-$row=mysqli_fetch_assoc($fetch);
-$fname=$row['foodname'];
-$userid=$row['userid'];
-$date=$row['date'];
-	
+	  $id = $_GET['idcancel'];
+    $fetch = mysqli_query($mysqli, "SELECT * FROM orders WHERE orderid='$id'");
+    $row = mysqli_fetch_assoc($fetch);
 
-	
-	
-	mysqli_query($mysqli,"DELETE FROM orders WHERE orderid='$id'");
-	//$fetch=mysqli_query($mysqli,"SELECT * FROM history WHERE userid='$userid'");
+    $fname = $row['foodname'];
+    $userid = $row['userid'];
+    $date = $row['date'];
+    $foodamount=$row['foodamount'];
+$fetch1=mysqli_query($mysqli,"SELECT * FROM Account WHERE userid='$userid'");
+$row2=mysqli_fetch_assoc($fetch1);
+	$fullamount=$row2['amount'];
+$refund=$fullamount+$foodamount;
+    mysqli_query($mysqli, "DELETE FROM orders WHERE orderid='$id'");
+    //$fetch=mysqli_query($mysqli,"SELECT * FROM history WHERE userid='$userid'");
 //while($row=mysqli_fetch_assoc($fetch)){
-	
-	
-	mysqli_query($mysqli,"DELETE FROM history WHERE historyid='$id'");
-	mysqli_query($mysqli,"DELETE FROM historyadmin WHERE id='$id'");
-	
+
+	mysqli_query($mysqli,"UPDATE Account SET amount='$refund' WHERE userid='$userid'");
+
+    mysqli_query($mysqli, "DELETE FROM history WHERE historyid='$id'");
+    mysqli_query($mysqli,"DELETE FROM historyadmin WHERE id='$id'");
+
 	//send mail
     $fetch = mysqli_query($mysqli, "SELECT username,email FROM account WHERE userid='$userid'");
     $row = mysqli_fetch_assoc($fetch);
