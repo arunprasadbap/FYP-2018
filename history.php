@@ -1,4 +1,5 @@
-<?php session_start(); ?>
+<?php session_start();
+ob_start(); ?>
 <?php if(isset($_SESSION['role']) && $_SESSION['role'] ==2 ): ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,7 @@
     <meta name="author" content="">
 
     <title>Cashless Canteen</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Bootstrap core CSS -->
@@ -28,12 +29,12 @@
     
    
     <!-- Page Content -->
-    <div class="table-responsive">
-
+    <div class="container">
+</br>
       
 <div class="table-responsive">
     <table class="table" style="border:20px;">
-	<thead>
+	<thead class="thead-light">
     <tr>
       <th>Date/Time</th>
       <th>Food/Drink</th>
@@ -125,4 +126,6 @@ while($row=mysqli_fetch_assoc($fetch)){
 <?php else:   
 header("Location: index.php");
 die();?>
-<?php endif; ?> 
+<?php endif; 
+ob_end_flush();
+?> 
