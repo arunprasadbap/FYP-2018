@@ -3,13 +3,13 @@
 if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
     include_once "script/pagination.php";
 
-    $con = mysqli_connect("localhost", "root", "rootroot", "canteen");
+    $con = mysqli_connect("localhost", "root", "", "canteen");
     
     //next page after clicking on pagination icon
     $targetpage = "viewuser.php";
     // Number adjacent pages should be shown on each side
-    $adjacents = 3;
-    $limit = 2;
+    $adjacents = 1;
+    $limit = 5;
     $page = isset($_GET['page']) ? $_GET['page'] : 0 ;
 
     $k = isset($_GET['k']) ? $_GET['k'] : "";
@@ -18,6 +18,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
     if (!empty($k) && !isset($_GET['limit'])) {
         $searchString = "WHERE userid LIKE '%" . $k . "%'";
     }
+    
+    $searchString = !empty($searchString) ? $searchString." AND role = 2 " : " WHERE role = 2 ";
 
     $totalCountInfo = mysqli_query($con, "select Count(*) as num from account $searchString");
     $total_pages = mysqli_fetch_assoc($totalCountInfo);
@@ -48,7 +50,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
 
     $pagination = pagination($page, $limit, $adjacents, $total_pages, $targetpage, $k);
 
-    $showList = array(1,2,3,'All');
+    $showList = array(0,1,2,3,'All');
 
     if(!empty($k)){
         $limitShow = "Select";
@@ -120,7 +122,13 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                 </form>
             </div>
         </div>
-        <div class="table-listing">
+        <div class="table-listing table-responsive">
+            <!--new session--->
+            <?php if(isset($_SESSION['success'])): ?>
+                                <div class="alert alert-success">
+                                    <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
+                                </div>
+            <?php endif; ?>    
             <table id="table" border="1em" class="table table-bordered table-striped table-hover">
                 <thead>
                 <tr>
@@ -128,17 +136,17 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                     <th>User Name</th>
                     <th>Email</th>
                     <th>Amount</th>
-                    <th colspan="2" style="text-align: center; width: 4%">Action</th>
+                    <th colspan="3" style="text-align: center; width: 4%">Action</th>
                 </tr>
                 </thead>
 
                 <tbody id="account">
                 <?php foreach ($data as $account) { ?>
                     <tr id="row<?php echo $account['userid']; ?>">
-                        <td><?php echo $account['userid']; ?></td>
-                        <td class="uname"><?php echo $account['username']; ?></td>
-                        <td class="eml"><?php echo $account['email']; ?></td>
-                        <td class="amnt"><?php echo $account['amount']; ?></td>
+                        <td class="userid"><?php echo $account['userid']; ?></td> <!--new only class-->
+                        <td class="username"><?php echo $account['username']; ?></td> <!--new only class-->
+                        <td class="email"><?php echo $account['email']; ?></td> <!--new only class-->
+                        <td class="amount"><?php echo $account['amount']; ?></td> <!--new only class-->
                         <td>
                             <button data-toggle="modal" data-target="#<?php echo "dlv_".$account['userid'] ?>" class="btn btn-primary" type="button">View</button>
                             <div id="<?php echo "dlv_".$account['userid'] ?>" class="modal fade" role="dialog">
@@ -182,6 +190,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                                 <input type="submit" onClick="if(confirm('Are you sure want to delete this user ?')) { return true; } else { return false; }" class="btn btn-danger" name="submit" value="Delete">
                             </form>
                         </td>
+                        <td><button class="btn btn-warning edit" type="button">Edit</button></td> <!--new -->
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -191,17 +200,83 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
             <?php echo $pagination; ?>
         </div>
     </div>
+    <!--new-->    
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+                                <!-- Modal content-->
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Details Information</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                            <form action="script/edit-user.php" method="post">
+                                        <table class="table table-bordered table-striped">
+                                            <tr>
+                                                <th>User Id</th>
+                                                <td>
+                                                    <input type="text" name="userid" class="userid" style="width:100%">
+                                                    <input type="hidden" name="oldUserId" class="oldUserId">    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Username</th>
+                                                <td><input type="text" name="username" class="username" style="width:100%"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td><input type="text" name="email" class="email" style="width:100%"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Amount</th>
+                                                <td><input type="text" name="amount" class="amount" style="width:100%"></td>
+                                            </tr>
+                                        </table>
+                                         <button type="submit" name="submit" class="btn btn-default">submit</button>
+                            </form>            
+                    </div>
+                
+            </div>
+        </div>
+    </div>
     <!-- Trigger the modal with a button -->
 
         <!-- Footer -->
-        <?php require 'footer.php'; ?>
+        
         </footer>
 
         <!-- Bootstrap core JavaScript -->
-<!--        <script src="jquery.min.js"></script>-->
-<!--        <script src="js/bootstrap.bundle.min.js"></script>-->
+        <!-- <script src="jquery/jquery.min.js"></script>
+        // <script src="js/bootstrap.bundle.min.js"></script> -->
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <!--new-->
+        <script>
+            $('.edit').on('click',function(){
+                    var userid   = $(this).closest('tr').find('.userid').text();
+                    var username = $(this).closest('tr').find('.username').text();
+                    var email    = $(this).closest('tr').find('.email').text();
+                    var amount   = $(this).closest('tr').find('.amount').text();
+
+                    $('#myModal .userid').val(userid);
+                    $('#myModal .oldUserId').val(userid);
+                    $('#myModal .username').val(username);
+                    $('#myModal .email').val(email);
+                    $('#myModal .amount').val(amount);
+
+                    $('#myModal').modal('show'); 
+
+            });
+        </script>
+
+
+
+<!--
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+-->
 
        
 
