@@ -8,8 +8,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
     //next page after clicking on pagination icon
     $targetpage = "viewuser.php";
     // Number adjacent pages should be shown on each side
-    $adjacents = 1;
-    $limit = 5;
+    $adjacents = 3;
+    $limit = 10;
     $page = isset($_GET['page']) ? $_GET['page'] : 0 ;
 
     $k = isset($_GET['k']) ? $_GET['k'] : "";
@@ -50,7 +50,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
 
     $pagination = pagination($page, $limit, $adjacents, $total_pages, $targetpage, $k);
 
-    $showList = array(0,1,2,3,'All');
+    $showList = array(10,20,30,40,'All');
 
     if(!empty($k)){
         $limitShow = "Select";
@@ -123,7 +123,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
             </div>
         </div>
         <div class="table-listing table-responsive">
-            <!--new session--->
+            
             <?php if(isset($_SESSION['success'])): ?>
                                 <div class="alert alert-success">
                                     <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
@@ -143,10 +143,10 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                 <tbody id="account">
                 <?php foreach ($data as $account) { ?>
                     <tr id="row<?php echo $account['userid']; ?>">
-                        <td class="userid"><?php echo $account['userid']; ?></td> <!--new only class-->
-                        <td class="username"><?php echo $account['username']; ?></td> <!--new only class-->
-                        <td class="email"><?php echo $account['email']; ?></td> <!--new only class-->
-                        <td class="amount"><?php echo $account['amount']; ?></td> <!--new only class-->
+                        <td class="userid"><?php echo $account['userid']; ?></td> 
+                        <td class="username"><?php echo $account['username']; ?></td> 
+                        <td class="email"><?php echo $account['email']; ?></td>
+                        <td class="amount"><?php echo $account['amount']; ?></td> 
                         <td>
                             <button data-toggle="modal" data-target="#<?php echo "dlv_".$account['userid'] ?>" class="btn btn-primary" type="button">View</button>
                             <div id="<?php echo "dlv_".$account['userid'] ?>" class="modal fade" role="dialog">
@@ -190,7 +190,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                                 <input type="submit" onClick="if(confirm('Are you sure want to delete this user ?')) { return true; } else { return false; }" class="btn btn-danger" name="submit" value="Delete">
                             </form>
                         </td>
-                        <td><button class="btn btn-warning edit" type="button">Edit</button></td> <!--new -->
+                        <td><button class="btn btn-warning edit" type="button">Edit</button></td> 
                     </tr>
                 <?php } ?>
                 </tbody>
@@ -200,7 +200,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
             <?php echo $pagination; ?>
         </div>
     </div>
-    <!--new-->    
+        
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
                                 <!-- Modal content-->
@@ -252,7 +252,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
-        <!--new-->
+        
         <script>
             $('.edit').on('click',function(){
                     var userid   = $(this).closest('tr').find('.userid').text();
