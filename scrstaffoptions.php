@@ -7,7 +7,9 @@ $dbusername = "root";
 $dbpassword = "";
 $dbname = "canteen";
 $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname);
+date_default_timezone_set("Asia/Kuching");
 
+$onlydat=date('Y/m/d');
 
 
 
@@ -35,12 +37,17 @@ $fetch1=mysqli_query($mysqli,"SELECT * FROM Account WHERE userid='$userid'");
 $row2=mysqli_fetch_assoc($fetch1);
 	$fullamount=$row2['amount'];
 $refund=$fullamount+$foodamount;
+	$map=mysqli_query($mysqli,"SELECT * FROM map WHERE date='$onlydat'");
+$rowmap=mysqli_fetch_assoc($map);
+$mapamount=$rowmap['amount'];
+$newmapamount=$mapamount- $foodamount;
+
     mysqli_query($mysqli, "DELETE FROM orders WHERE orderid='$id'");
     //$fetch=mysqli_query($mysqli,"SELECT * FROM history WHERE userid='$userid'");
 //while($row=mysqli_fetch_assoc($fetch)){
 
 	mysqli_query($mysqli,"UPDATE Account SET amount='$refund' WHERE userid='$userid'");
-
+	mysqli_query($mysqli,"UPDATE map SET amount='$newmapamount' WHERE date='$onlydat'");
     mysqli_query($mysqli, "DELETE FROM history WHERE historyid='$id'");
     mysqli_query($mysqli,"DELETE FROM historyadmin WHERE id='$id'");
 
