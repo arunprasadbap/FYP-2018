@@ -136,6 +136,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                     <th>User Name</th>
                     <th>Email</th>
                     <th>Amount</th>
+                    <th>Rating(5)</th>
                     <th colspan="3" style="text-align: center; width: 4%">Action</th>
                 </tr>
                 </thead>
@@ -147,6 +148,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1):
                         <td class="username"><?php echo $account['username']; ?></td> 
                         <td class="email"><?php echo $account['email']; ?></td>
                         <td class="amount"><?php echo $account['amount']; ?></td> 
+                        <td class="amount"><?php echo $account['rating']; ?></td>
                         <td>
                             <button data-toggle="modal" data-target="#<?php echo "dlv_".$account['userid'] ?>" class="btn btn-primary" type="button">View</button>
                             <div id="<?php echo "dlv_".$account['userid'] ?>" class="modal fade" role="dialog">
