@@ -34,7 +34,7 @@
 <?php 
  
 require 'script/db.php';
-$fetch=mysqli_query($mysqli,"SELECT count(*) FROM account WHERE role =2");
+$fetch=mysqli_query($mysqli,"SELECT count(*) FROM Account WHERE role =2");
 $row=mysqli_fetch_assoc($fetch);
 $size = $row['count(*)'];
 
@@ -43,23 +43,47 @@ $size = $row['count(*)'];
     <?php require 'navAdmin.php'; ?>
 
     <div class="container">
+
+	  <h3 align="center" class="my-4">Sales Reports</h3>
+
+      
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 align="center" class="card-header"><div class="alert alert-info">
+  <strong align="center">SCR</strong> 
+</div></h4>
+            <div class="card-body">
+              <a href="reports.php"><img class="card-img-top" src="img/scr.jpg" alt=""></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 align="center" class="card-header"><div class="alert alert-info">
+  <strong align="center">LAKSA</strong> 
+</div></h4>
+            <div class="card-body">
+              <a href="#"><img class="card-img-top" src="img/laksa.png" alt=""></a>
+            </div>
+            </div>
+            </div>
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <h4 align="center" class="card-header"><div class="alert alert-info">
+  <strong align="center">INDIAN</strong> 
+</div></h4>
+            <div class="card-body">
+              <a href="#"><img class="card-img-top" src="img/indian2.jpg" alt=""></a>
+        
+          </div>
+        </div>
+        </div>
+      </div>
+  <hr>
 	</br>
-	</br>
-	</br>
-	</br>
-	<a href="reports.php"><p align="center"><button type="button"  style="width:600px;height:50px;" class="btn btn-primary btn-block">SCR</button></p></a>
-	</br>
-	</br>
-	<p align="center"><button type="button" style="width:600px;height:50px;" class="btn btn-primary btn-block">LAKSA</button></p>
-	</br>
-	</br>
-	<p align="center"><button type="button" style="width:600px;height:50px;" class="btn btn-primary btn-block">INDIAN</button></p>
-	</br>
-	</br>
-	<p align="center"><button type="button" style="width:600px;height:50px;" class="btn btn-primary btn-block">PIZZA</button></p>
-	</br>
-	</br>
-	<p align="center"><button type="button" class="btn btn-info btn-block" data-toggle="popover" title="Active Users" data-content="Current Users: <?php echo $size;  ?>" style="width:250px;height:60px;" data-toggle="modal" data-target="#delete" >Active Users</button></p>
+
+	<p align="center"><button type="button" class="btn btn-info btn-block" data-toggle="popover" title="Active Users" data-content="Current Users: <?php echo $size;  ?>" style="width:400px;height:60px;" data-toggle="modal" data-target="#delete" >Active Users</button></p>
 	
 	</div>
 
