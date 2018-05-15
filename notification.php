@@ -40,12 +40,7 @@ include_once "script/db.php";
                         unset($_SESSION['success']) ?></h1>
                 </div>
             </div>
-        <?php else: ?>
-            <?php
-            $result = $mysqli->query("SELECT number FROM orders WHERE userid = '$_SESSION[idnum]' AND order_status = 'on the way' LIMIT 1");
-            if ($result->num_rows > 0):
-                $row = $result->fetch_assoc();
-                ?>
+        <?php else: ?>   
                 <div class="row main">
                     <div class="main-login main-center">
                         <h1>Order Conformation</h1>
@@ -53,31 +48,52 @@ include_once "script/db.php";
                 </div>
                 <div style="width: 50%;margin: auto;">
                 <hr>
-                <form action="script/order-confirmation.php" method="post">
-                    <table class="table table-bordered">
-                        <tbody>
-                        <tr style="text-align: center;">
-                            <th><?php echo $row['number'];
-                                $_SESSION['number'] = $row['number']; ?></th>
-                        </tr>
-                        <tr>
-                            <th style="text-align: center;">
-                                <button type="submit" name="confirm_order" class="btn btn-primary btn-sm center-block">
-                                    Conform Order
-                                </button>
-                            </th>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-                </div><?php else: ?>
+                <?php
+                $result = $mysqli->query("SELECT orderid,foodname, number, foodamount FROM orders WHERE userid = '$_SESSION[idnum]' AND order_status = 'on the way'"); 
+                if ($result->num_rows > 0): ?>
+	                <form action="script/order-confirmation.php" method="post">
+	                    <table class="table table-bordered">
+	                        <thead>
+	                        	<th>Sl</th>
+	                        	<th>Food Name</th>
+	                        	<th>Food Amount</th>
+	                        </thead>
+	                        <tbody>
+	                        <?php 
+	                        	$sl = 1;
+	                        	while($row = $result->fetch_assoc()){  ?>
+	                        		<tr>
+	                        			<td><?php echo $sl; ?><input type="hidden" name="order_id[]" value="<?php echo $row['orderid'] ?>"></td>	
+	                            		<td><?php echo $row['foodname']; ?></td>
+	                            		<td><?php echo $row['foodamount']; $orderNumbers = $row['number']; ?></td>
+	                        		</tr>
+	                        <?php $sl++; }
+	                        ?>
+	                        <tr>
+	                        	<th colspan="3" style="text-align: center;"><?php echo $orderNumbers ?></th>
+	                        </tr>
+	                       
+	                        <tr>
+	                            <th colspan="3" style="text-align: center;">
+	                                <button type="submit" name="confirm_order" class="btn btn-primary btn-sm center-block">
+	                                    Conform Order
+	                                </button>
+	                            </th>
+	                        </tr>
+	                        </tbody>
+	                    </table>
+	                </form>
+                </div>
+            	<?php else: ?>
                 <div class="row main">
                     <div class="main-login main-center">
                         <h1>You don't have any notication</h1>
                     </div>
                 </div>
-            <?php endif; ?>
+                <?php endif; ?>
+            
         <?php endif; ?>
+    </div>
     </div>
     <!-- Footer -->
     <?php require 'footer.php'; ?>
