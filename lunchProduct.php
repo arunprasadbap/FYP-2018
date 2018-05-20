@@ -1,4 +1,6 @@
 <?php 
+ob_start();
+
 session_start(); 
 require 'script/db.php';
 
@@ -20,7 +22,14 @@ require 'script/db.php';
     <!-- Bootstrap core CSS -->
 	
     
+	
+   
+    <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles-->
+    <link href="css/layout.css" rel="stylesheet">
+    
 <link rel="stylesheet" type="text/css" href="css/styleuserfood.css">
     <!-- Custom styles-->
    
@@ -29,18 +38,37 @@ require 'script/db.php';
   <body>
 
     <!-- Navigation -->
-  <?php require 'navUser.php'; ?>
+    <?php require 'navUser.php'; ?>
     
     
-    <!-- Page Content -->
    <h1 class="my-4"></h1>
    
       
     <div class="container">
-       </br>
-	   </br>
-	   </br>
-  <div class="dropdown">
+       
+        <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+  <div class="modal-header">
+  <h2 class="modal-title"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out Of Stock</strong></h2>
+  </div>
+ 
+  <div class="modal-body">
+  <div class="alert alert-danger">
+  <h5><p align="center"><strong>Sorry you cant add this item to your cart at the moment</strong></p></h5>
+</div>
+    
+  </div>
+  <div class="modal-footer">
+    <a href="lunchProduct.php?idr=1" class="btn btn-danger">Close</a>
+    
+  </div>
+  </div>
+</div>
+</div>
+    <div class="dropdown">
   &nbsp;&nbsp;&nbsp;<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Categories
   <span class="caret"></span></button>
   <ul class="dropdown-menu">
@@ -51,6 +79,7 @@ require 'script/db.php';
 
   </ul>
 </div>
+	
 	
 <?php  if(isset($_GET['idr'])){  ?>
 	<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch");
@@ -66,7 +95,7 @@ $_SESSION['dropname']='All';
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
   </a><form action="addtocart.php" method="post">
-  <div class="desc" id="gal"><h3><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h3>
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
         </button>
@@ -97,7 +126,7 @@ $userid=$_SESSION['idnum'];
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
   </a><form action="addtocart.php" method="post">
-  <div class="desc" id="gal"><h3><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h3>
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
         </button>
@@ -129,7 +158,7 @@ $userid=$_SESSION['idnum'];
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
   </a><form action="addtocart.php" method="post">
-  <div class="desc" id="gal"><h3><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h3>
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
         </button>
@@ -163,7 +192,7 @@ $userid=$_SESSION['idnum'];
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
   </a><form action="addtocart.php" method="post">
-  <div class="desc" id="gal"><h3><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h3>
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
         </button>
@@ -181,8 +210,7 @@ $userid=$_SESSION['idnum'];
     <?php
 } ?>
 	   	 
-      
-        
+       
   
   
     <!-- /.container -->
@@ -192,18 +220,32 @@ $userid=$_SESSION['idnum'];
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="jquery/jquery.min.js"></script>
+     <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+     <script src="script/ajax-call.js"></script>
 
   </body>
 </html>
 <?php else:   
 header("Location: index.php");
 die();?>
-<?php endif; ?> 
-
+<?php endif; 
+ob_end_flush();
+?> 
  <script>
 $(".dropdown-menu li a").click(function(){
   $(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
 });
 </script>
+<?php if(isset($_GET['ofsl'])){        ?>
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#myModal').modal('show');
+    });
+</script>
+<?php } 
+
+
+
+
+?>
