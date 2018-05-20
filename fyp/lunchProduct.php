@@ -1,4 +1,6 @@
 <?php 
+ob_start();
+
 session_start(); 
 require 'script/db.php';
 
@@ -20,9 +22,15 @@ require 'script/db.php';
     <!-- Bootstrap core CSS -->
 	
     
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+   
+    <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="styleuserfood.css">
+
+    <!-- Custom styles-->
+    <link href="css/layout.css" rel="stylesheet">
+    
+<link rel="stylesheet" type="text/css" href="css/styleuserfood.css">
     <!-- Custom styles-->
    
   </head>
@@ -30,19 +38,83 @@ require 'script/db.php';
   <body>
 
     <!-- Navigation -->
-  <?php require 'navUser.php'; ?>
+    <?php require 'navUser.php'; ?>
     
     
-    <!-- Page Content -->
    <h1 class="my-4"></h1>
    
       
     <div class="container">
        
+        <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
     
-	
+      <!-- Modal content-->
+      <div class="modal-content">
+  <div class="modal-header">
+  <h2 class="modal-title"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out Of Stock</strong></h2>
+  </div>
+ 
+  <div class="modal-body">
+  <div class="alert alert-danger">
+  <h5><p align="center"><strong>Sorry you cant add this item to your cart at the moment</strong></p></h5>
+</div>
+    
+  </div>
+  <div class="modal-footer">
+    <a href="lunchProduct.php?idr=1" class="btn btn-danger">Close</a>
+    
+  </div>
+  </div>
+</div>
+</div>
+    <div class="dropdown">
+  &nbsp;&nbsp;&nbsp;<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Categories
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="lunchProduct.php?idc=2">Rice Choice</a></li>
+    <li><a href="lunchProduct.php?idcr=3">Chicken Rice</a></li>
+    <li><a href="lunchProduct.php?idn=3">Noodles</a></li>
+	    <li class="dropdown active"><a href="lunchProduct.php?idr=2">Show All</a></li>
 
+  </ul>
+</div>
+	
+	
+<?php  if(isset($_GET['idr'])){  ?>
 	<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch");
+while($row=mysqli_fetch_assoc($fetch)){  
+
+$id=$row['id'];
+$userid=$_SESSION['idnum'];
+$_SESSION['dropname']='All';
+
+?>
+
+<div class="gallery" id="galleryy">
+  <a>
+    <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
+  </a><form action="addtocart.php" method="post">
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
+ <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
+         <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
+        </button>
+</form>
+  </div>
+
+</div>
+
+<?php
+} ?>
+	
+	<?php
+} ?>
+	
+	<?php  if(isset($_GET['idn'])){  
+	
+	?>
+	
+		<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE Category='Noodles'");
 while($row=mysqli_fetch_assoc($fetch)){  
 
 $id=$row['id'];
@@ -50,12 +122,12 @@ $userid=$_SESSION['idnum'];
 
 ?>
 
-<div class="gallery">
+<div class="gallery" id="galleryy">
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
   </a><form action="addtocart.php" method="post">
-  <div class="desc"><h3><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h3>
- <h2><input type="number"  name="quantity" min="1" max="5"  oninvalid="this.setCustomValidity('Select Quatity')" oninput="setCustomValidity('')" required></h2><input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
+ <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
         </button>
 </form>
@@ -69,15 +141,76 @@ $userid=$_SESSION['idnum'];
 	
 	
 	
+    <?php
+} ?>
+	   
+  <?php  if(isset($_GET['idcr'])){  ?>
+	
+		<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE Category='Chicken rice'");
+while($row=mysqli_fetch_assoc($fetch)){  
+
+$id=$row['id'];
+$userid=$_SESSION['idnum'];
+
+?>
+
+<div class="gallery" id="galleryy">
+  <a>
+    <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
+  </a><form action="addtocart.php" method="post">
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
+ <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
+         <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
+        </button>
+</form>
+  </div>
+
+</div>
+
+<?php
+} ?>
 	
 	
 	
 	
+    <?php
+} ?>
+	   
+     
+
+  <?php  if(isset($_GET['idc'])){  ?>
+	
+		<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE Category='Rice choice'");
+while($row=mysqli_fetch_assoc($fetch)){  
+
+$id=$row['id'];
+$userid=$_SESSION['idnum'];
+
+?>
+
+<div class="gallery" id="galleryy">
+  <a>
+    <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
+  </a><form action="addtocart.php" method="post">
+  <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
+ <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
+         <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
+        </button>
+</form>
+  </div>
+
+</div>
+
+<?php
+} ?>
 	
 	
+	
+	
+    <?php
+} ?>
+	   	 
        
-       
-        
   
   
     <!-- /.container -->
@@ -87,29 +220,32 @@ $userid=$_SESSION['idnum'];
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="jquery/jquery.min.js"></script>
+     <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
+     <script src="script/ajax-call.js"></script>
 
   </body>
 </html>
 <?php else:   
 header("Location: index.php");
 die();?>
-<?php endif; ?> 
-<script>
- $('#button').on('click', function(e) {
-    var btn = $(this),
-        icon = btn.find('.glyphicon'),
-        text = btn.find('.text'),
-        toggleClass = 'showArchived';
-
-    if (btn.hasClass(toggleClass)) {
-        icon.removeClass('glyphicon-shopping-cart').addClass('glyphicon-ok');
-        text.text('SUCCESSFULLY ADDED');
-    } else {
-        icon.removeClass('glyphicon-ok').addClass('glyphicon-shopping-cart');
-        text.text('ADD TO CART');
-    }
-    btn.toggleClass(toggleClass);
+<?php endif; 
+ob_end_flush();
+?> 
+ <script>
+$(".dropdown-menu li a").click(function(){
+  $(".btn:first-child").html($(this).text()+' <span class="caret"></span>');
 });
- </script>
+</script>
+<?php if(isset($_GET['ofsl'])){        ?>
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#myModal').modal('show');
+    });
+</script>
+<?php } 
+
+
+
+
+?>
