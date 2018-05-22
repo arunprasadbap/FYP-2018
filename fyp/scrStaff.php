@@ -56,7 +56,7 @@ $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname);
             <?php
             $stall = 4;
 
-            $fetch = mysqli_query($mysqli, "SELECT * FROM orders WHERE stall='$stall' AND (order_status='processing' || order_status = 'on the way') ORDER BY date DESC");
+            $fetch = mysqli_query($mysqli, "SELECT * FROM orders WHERE stall='$stall' ORDER BY date DESC");
             while ($row = mysqli_fetch_assoc($fetch)) {
                 $id = $row['orderid'];
                 ?>
@@ -69,16 +69,6 @@ $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname);
                     <td><?php echo $row['foodamount']; ?></td>
                     <td><?php echo $row['ordertype']; ?></td>
                     <td>
-                        <?php if($row['order_status'] == 'processing'): ?>
-                            <a href="scrstaffoptions.php?idready=<?php echo $id; ?>">
-                                <button type="button" class="btn btn-success">Ready</button>
-                            </a>
-                            <?php elseif($row['order_status'] == 'on the way'): ?>
-                            <a href="javascript:void(0)">
-                                <button type="button" class="btn btn-warning">On the way</button>
-                            </a>
-                        <?php endif; ?>
-
                         <a href="scrstaffoptions.php?idcancel=<?php echo $id; ?>">
                             <button type="button" class="btn btn-danger">Cancel</button>
                         </a>
