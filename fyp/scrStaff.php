@@ -5,107 +5,118 @@ $dbpassword = "";
 $dbname = "canteen";
 $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 
+//echo "SELECT * FROM orders WHERE stall='4' AND (order_status='processing' || order_status = 'on the way') ORDER BY date DESC";
+//die;
 
- ?>
-<?php if(isset($_SESSION['role']) && $_SESSION['role'] ==4): ?>
-<!DOCTYPE html>
-<html lang="en">
+?>
+<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 4): ?>
+    <!DOCTYPE html>
+    <html lang="en">
 
-  <head>
+    <head>
 
-    <meta http-equiv="Refresh" content="5">
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <meta http-equiv="Refresh" content="5">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>Canteen Staff Page</title>
+        <title>Canteen Staff Page</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/layout.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="css/layout.css" rel="stylesheet">
 
-  </head>
+    </head>
 
-  <body>
+    <body>
 
-   <!--Nav-->
-   <?php require 'navSCR.php'; ?>
+    <!--Nav-->
+    <?php require 'navSCR.php'; ?>
 
     <!-- Page Content -->
     <div class="container">
-       </br>
-		<table class="table table-hover">
-    <thead class="thead-dark">
-      <tr>
-	   <th>Date/Time</th>
-        <th>User ID</th>
-        <th>User Name</th>
-        <th>Food/Drink</th>
-		 <th>Quantity</th>
-		 <th>Amount</th>
-		 <th>Table No</th>
-		 <th align="center">Options</th>
-      </tr>
-    </thead>
-    <tbody>
-	<?php 
-$stall=4;
+        </br>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>Date/Time</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>Food/Drink</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Table No</th>
+                <th align="center">Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $stall = 4;
 
-$fetch=mysqli_query($mysqli,"SELECT * FROM orders WHERE stall='$stall' ORDER BY date DESC");
-while($row=mysqli_fetch_assoc($fetch)){ 
-$id=$row['orderid'];
+            $fetch = mysqli_query($mysqli, "SELECT * FROM orders WHERE stall='$stall' AND (order_status='processing' || order_status = 'on the way') ORDER BY date DESC");
+            while ($row = mysqli_fetch_assoc($fetch)) {
+                $id = $row['orderid'];
+                ?>
+                <tr>
+                    <td><?php echo $row['date']; ?></td>
+                    <td><?php echo $row['userid']; ?></td>
+                    <td><?php echo $row['username']; ?></td>
+                    <td><?php echo $row['foodname']; ?></td>
+                    <td><?php echo $row['quantity']; ?></td>
+                    <td><?php echo $row['foodamount']; ?></td>
+                    <td><?php echo $row['ordertype']; ?></td>
+                    <td>
+                        <?php if($row['order_status'] == 'processing'): ?>
+                            <a href="scrstaffoptions.php?idready=<?php echo $id; ?>">
+                                <button type="button" class="btn btn-success">Ready</button>
+                            </a>
+                            <?php elseif($row['order_status'] == 'on the way'): ?>
+                            <a href="javascript:void(0)">
+                                <button type="button" class="btn btn-warning">On the way</button>
+                            </a>
+                        <?php endif; ?>
 
- ?>
-      <tr>
-	  <td><?php echo $row['date']; ?></td>
-        <td><?php echo $row['userid']; ?></td>
-        <td><?php echo $row['username']; ?></td>
-        <td><?php echo $row['foodname']; ?></td>
-		<td><?php echo $row['quantity']; ?></td>
-        <td><?php echo $row['foodamount']; ?></td>
-        <td><?php echo $row['ordertype']; ?></td>
-		<td><a href="scrstaffoptions.php?idready=<?php echo $id;?>"><button type="button" class="btn btn-success">Ready</button></a>&nbsp;&nbsp;&nbsp;<a href="scrstaffoptions.php?idcancel=<?php echo $id;?>"><button type="button" class="btn btn-danger">Cancel</button></a></td>
-      </tr>
-	  <?php }  ?>
+                        <a href="scrstaffoptions.php?idcancel=<?php echo $id; ?>">
+                            <button type="button" class="btn btn-danger">Cancel</button>
+                        </a>
+                    </td>
+                </tr>
+            <?php } ?>
 
-    </tbody>
-  </table>
-
-
-      
+            </tbody>
+        </table>
 
 
     </div>
     <!-- /.container -->
 
     <!-- Footer -->
-<?php //require 'footer.php'; ?>
+    <?php //require 'footer.php'; ?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 
-  </body>
+    </body>
 
-</html>
-<?php else:   
-header("Location: index.php");
-die();?>
-<?php endif; ?> 
+    </html>
+<?php else:
+    header("Location: index.php");
+    die(); ?>
+<?php endif; ?>
 <style>
-.table {
-    position:relative;
-}
+    .table {
+        position: relative;
+    }
 
-.thead-dark {
-    height:250px;
-    overflow:auto;  
-    margin-top:20px;
-}
-
+    .thead-dark {
+        height: 250px;
+        overflow: auto;
+        margin-top: 20px;
+    }
 
 
 </style>
