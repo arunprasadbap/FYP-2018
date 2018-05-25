@@ -1,336 +1,100 @@
 <?php 
-$total=0;
-$size='';
 session_start(); 
 require 'script/db.php';
 
 
- if(isset($_SESSION['role']) && $_SESSION['role'] ==2): 
-
-
-if(isset($_GET['remove'])){
-	$id=$_GET['remove'];
-	$userid=$_SESSION['idnum'];
-	
-	if(mysqli_query($mysqli,"DELETE FROM cart WHERE user_id='$userid' AND cartid='$id'")){
-		header("location:cartselection.php");
-	}
-	
-	
-	
-}
-
-
-
-
-
- 
-if(isset($_POST['updatequan'])){
-	
-	$id=$_POST['ipid'];
-	$quant=$_POST['quantity'];
-	echo $id;
-	echo '</br>';
-	echo $quant;
-	
-	
-	
-}
-
-
-if(isset($_GET['min'])){
-	$food=0;
-	$amount=0;
-	$id=$_GET['min'];
-	$userid=$_SESSION['idnum'];
-	$fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE user_id='$userid' AND cartid='$id'");
-	$row=mysqli_fetch_assoc($fetch);
-	$row['quantity'];
-	$singleamount=$row['price'];
-	$actamount=$row['amount_food'];
-	if($row['quantity']>1){
-		if($row['quantity']>=2){
-			$food=$row['amount_food'];
-	
-	$food=$food-$singleamount;
-		}
-	$amount=$row['quantity']-1;
-	if(mysqli_query($mysqli,"UPDATE cart SET quantity='$amount', amount_food='$food' WHERE user_id='$userid' AND cartid='$id'")){
-		header("location:cartselection.php");
-	}
-	}else{
-		header("location:cartselection.php");
-	}
-	
-	
-}
-if(isset($_GET['max'])){
-	$amount=0;
-	$food=0;
-	
-	$id=$_GET['max'];
-	$userid=$_SESSION['idnum'];
-	$fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE user_id='$userid' AND cartid='$id'");
-	$row=mysqli_fetch_assoc($fetch);
-	$fid=$row['id_food'];
-	$fname=$row['name_food'];
-	$row['quantity'];
-	$singleamount=$row['price'];
-	$actamount=$row['amount_food'];
-	$amount=$row['quantity']+1;
-	$food=$row['amount_food'];
-	
-	$food=$food+$singleamount;
-	$breakfound=mysqli_query($mysqli,"SELECT * FROM scrbreakfast WHERE id='$fid' AND breakfast='$fname'");
-		$lunchfound=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE id='$fid' AND lunch='$fname'");
-		$drinkfound=mysqli_query($mysqli,"SELECT * FROM scrdrinks WHERE id='$fid' AND drinks='$fname'");
-		
-if(mysqli_num_rows($breakfound)==1){
-			$row4=mysqli_fetch_assoc($breakfound);
-			$oldquantitybr=$row4['quantity'];
-			if($amount>$oldquantitybr){
-				header("location:cart.php?ofs=1");
-				
-			}else{
-				
-				mysqli_query($mysqli,"UPDATE cart SET quantity='$amount', amount_food='$food' WHERE user_id='$userid' AND cartid='$id'");
-
-	header("location:cartselection.php");
-	
-			}
-			
-			
-			
-		}
-		
-		if(mysqli_num_rows($lunchfound)==1){
-			$row5=mysqli_fetch_assoc($lunchfound);
-			$oldquantityl=$row5['quantity'];
-			if($amount>$oldquantityl){
-				header("location:cart.php?ofsl=1");
-				
-			}else{
-				
-				mysqli_query($mysqli,"UPDATE cart SET quantity='$amount', amount_food='$food' WHERE user_id='$userid' AND cartid='$id'");
-
-	header("location:cartselection.php");
-			}
-			
-			
-			
-		}
-		if(mysqli_num_rows($drinkfound)==1){
-			
-				
-				mysqli_query($mysqli,"UPDATE cart SET quantity='$amount', amount_food='$food' WHERE user_id='$userid' AND cartid='$id'");
-
-	header("location:cartselection.php");
-			
-			
-			
-			
-		}
-	
-	
-	
-	
-}
-
-if(isset($_GET['alert'])){
-	
-	unset($_SESSION['alert']);
-	header("Location:cart.php");
-}
-
-
-
-
 
 ?>
+
+<?php if(isset($_SESSION['role']) && $_SESSION['role'] ==2): ?>
  
 <html lang="en">
 
   <head>
 
-
-    <!-- Bootstrap core CSS -->
-	 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cashless Canteen</title>
+    <h1><title>Cashless Canteen</title></h1>
 
+    <!-- Bootstrap core CSS -->
+	
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><!-- Bootstrap core CSS -->
+   
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	
-  <link href="css/layout.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/styleuserfood.css">
     <!-- Custom styles-->
-    <link href="css/layout.css" rel="stylesheet">
+    
   </head>
 
   <body>
 
     <!-- Navigation -->
-   <?php require 'navUser.php'; ?>
-    
-    
+    <?php require 'navUser.php'; ?>
+
+
     <!-- Page Content -->
-
+   <h1 class="my-4"></h1>
    
-      
     <div class="container">
-       </br></br>
-  
-
-      
-<div class="table-responsive">
-    <table class="table" style="border:20px;">
-    <thead class="thead-light">
-        <tr>
-           
-            <th>ITEM NAME</th>
-            <th>&nbsp;&nbsp;&nbsp;QUANTITY&nbsp;&nbsp;&nbsp;</th>
-            <th>AMOUNT</th>
-			<th>SELLER</th>
-			<th>REMOVE</th>
-			
-        </tr>
-    </thead>
-    <!--Table head-->
-
-    <!--Table body-->
-    <tbody>
-	<?php 
-
-
-$fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE user_id='$userid'");
-while($row=mysqli_fetch_assoc($fetch)){ 
-$id=$row['cartid'];
-
- ?>
-        <tr>
-           
-            <td><?php echo $row['name_food'];  ?></td>
-               <td><a href="cart.php?min=<?php echo $id; ?>"  ><button class="btn btn-danger">-</button></a>&nbsp;&nbsp;<?php echo $row['quantity'];  ?>&nbsp;&nbsp;<a href="cart.php?max=<?php echo $id; ?>"  ><button class="btn btn-success">+</button></a></td>
-        
-		   <td><?php echo 'RM '.$row['amount_food'];  ?></td>
-			<td><?php echo $row['stall'];  ?></td>
-            <td><a href="cart.php?remove=<?php echo $id; ?>"  ><button type="button"  name="editlunch" class="btn btn-danger" >REMOVE</button></a></td>
-			
-        </tr>
-		<?php $total= $total+$row['amount_food']; ?>
-<?php }  ?>
-
-
-    </tbody>
-    <!--Table body-->
-
-</table>
-<!--Table-->
-	
-<p align="center" ><div id="info" class="alert alert-info"  style="width:180px;">
-  <strong>Total:&nbsp;</strong>RM <?php echo $total;  ?>
-</div></p>
-</br>
-<form action="placeorder.php" method="post">
-<input type="hidden" name="balance" value="<?php echo $total; ?>">
-
-<h4> DINE IN <input type="radio" onclick="javascript:orderselection();" name="radio" value="dinein" id="yesCheck" required> TAKE AWAY <input type="radio" onclick="javascript:orderselection();" name="radio" value="takeaway" id="noCheck" required><br>
-    </br>
-	<div id="ifYes" style="visibility:hidden">
-        <b>SEAT NO:</b><input type='text' class="form-control" id='yes' name='table'><br></h4>
        
-    </div>
-	
-	<script>
-	function orderselection() {
-    if (document.getElementById('yesCheck').checked) {
-        document.getElementById('ifYes').style.visibility = 'visible';
-    }
-    else document.getElementById('ifYes').style.visibility = 'hidden';
-
-}
-	</script>
-</br></br></br></br></br></br></br>
-<p align="center"><button type="button" class="btn btn-success"  style="width:250px;height:60px;margin:-160px;" data-toggle="modal" data-target="#exampleModalCenter" >PLACE ORDER</button></p>
-
-    <div class="modal fade" id="ofs" role="dialog">
+    <div class="modal fade" id="myModal" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     
       <!-- Modal content-->
       <div class="modal-content">
   <div class="modal-header">
-  <h2 class="modal-title"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Out Of Stock</strong></h2>
+  <h2 class="modal-title"><strong>Out Of Stock</strong></h2>
   </div>
  
   <div class="modal-body">
   <div class="alert alert-danger">
-  <h5><p align="center"><strong>Sorry you cant add anymore</strong></p></h5>
+  <h4><p align="center"><strong>Sorry you cant add this item to your cart at the moment</strong></p></h4>
 </div>
     
   </div>
   <div class="modal-footer">
-    <a href="cartselection.php" class="btn btn-danger">Close</a>
+    <a href="bfastProduct.php" class="btn btn-danger">Close</a>
     
   </div>
   </div>
 </div>
 </div>
 
-<div class="modal fade" id="exampleModalCenter" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-       
-          <h2 class="modal-title">CHECKOUT</h2>
-        </div>
-        <div class="modal-body">
-          <p><b>Total of <?php  echo $total;?> RM will be deducted from your Account</b></p>
-        </div>
-        <div class="modal-footer">
-		<button type="submit" name="proceed" class="btn btn-primary">Proceed</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-		</div>
-      </div>
-      
-    </div>
-  </div>
-  
-  
-   <div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog modal-dialog-centered">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-  <div class="modal-header">
-  <h2 class="modal-title"><strong>UNABLE TO PLACE THE ORDER</strong></h2>
-  </div>
+	
+
+	<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrbreakfast");
+while($row=mysqli_fetch_assoc($fetch)){  
+
+$id=$row['id'];
+$userid=$_SESSION['idnum'];
+
+?>
+
+<div class="gallery">
+  <a>
+    <img src="images/breakfast/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="breakfast" width="300" height="200">
+  </a><form action="addtocart.php" method="post">
+  <div class="desc"><h3><?php echo '<b>'.$row['breakfast'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['breakfast_amount']; ?></h3>
+<input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcart" id="button" class="btn btn-primary">
+         <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
+        </button>
+		<script>
  
-  <div class="modal-body">
-  <div class="alert alert-warning">
-  <h6><p align="center"><strong>SORRY</strong> Insufficient funds to Place the Order.</p></h6>
-</div>
-    
-  </div>
-  <div class="modal-footer">
-    <a href="cart.php?alert=balance" class="btn btn-danger">Close</a>
-    
-  </div>
-  </div>
-</div>
-</div>
+ </script>
+		
 </form>
+  </div>
 
+</div>
 
-
-
-
+<?php
+} ?>
 	
 	
 	
@@ -355,7 +119,6 @@ $id=$row['cartid'];
     <!-- Bootstrap core JavaScript -->
     <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-     <script src="script/ajax-call.js"></script>
 
   </body>
 </html>
@@ -363,35 +126,10 @@ $id=$row['cartid'];
 header("Location: index.php");
 die();?>
 <?php endif; ?> 
-<?php if(isset($_SESSION['alert'])){        ?>
-<script type="text/javascript">
-    $(window).on('load',function(){
-        $('#myModal').modal('show');
-    });
-</script>
-<?php } 
-
-
-
-
-?>
-
 <?php if(isset($_GET['ofs'])){        ?>
 <script type="text/javascript">
     $(window).on('load',function(){
-        $('#ofs').modal('show');
-    });
-</script>
-<?php } 
-
-
-
-
-?>
-<?php if(isset($_GET['ofsl'])){        ?>
-<script type="text/javascript">
-    $(window).on('load',function(){
-        $('#ofs').modal('show');
+        $('#myModal').modal('show');
     });
 </script>
 <?php } 
