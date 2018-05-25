@@ -8,10 +8,10 @@ $dbpassword = "";
 $dbname = "canteen";
 $userid=$_SESSION['idnum'];
 $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname) or die($mysqli->error);
+
 $fetch=mysqli_query($mysqli,"SELECT count(*) FROM cart WHERE user_id =$userid;");
 $row=mysqli_fetch_assoc($fetch);
 $size = $row['count(*)'];
-
 
 ?>
  
