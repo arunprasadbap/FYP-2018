@@ -2,8 +2,7 @@
 session_start(); 
 require 'script/db.php';
 
-$query = "SELECT * FROM scrlunch";
-$result = $mysqli->query($query);
+
 
 ?>
 <?php if(isset($_SESSION['role']) && $_SESSION['role'] ==4): ?>
@@ -17,13 +16,16 @@ $result = $mysqli->query($query);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cashless Canteen</title>
+    <h1><title>Cashless Canteen</title></h1>
 
     <!-- Bootstrap core CSS -->
+	
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
+      <link href="css/layout.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/styleuserfood.css">
     <!-- Custom styles-->
-    <link href="css/layout.css" rel="stylesheet">
+    
   </head>
 
   <body>
@@ -34,35 +36,22 @@ $result = $mysqli->query($query);
     
     <!-- Page Content -->
    <h1 class="my-4">Lunch Menu</h1>
-   
-      <?php while ($Food = mysqli_fetch_assoc($result)) {?>
     <div class="container">
-       <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card h-80">
-                    <h4 class="card-header"><?php echo $Food['lunch']; ?></h4>
-                        <div class="card-body">
-                            <img class="card-img-top" src="images/lunch/<?php echo $Food['img']; ?>" alt="">
-                        </div>
-                            <div class="card-footer">
-                                <p>RM<?php echo $Food['lunch_amount']; ?></p>
-                            </div>
-                </div>
-            </div>
+       <?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch");
+        while($Food=mysqli_fetch_assoc($fetch)){  ?>
+<div class="gallery">
+  <a><img src="images/lunch/<?php echo $Food['img']; ?>" id="image" class="img-responsive" width="300" height="200">
+        <div><h6><?php echo '<b>'.$Food['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$Food['lunch_amount']; ?></h6>
+ 
+	
+</form>
         </div>
-    </div>
-       
-        <?php } ?>
-       
-        
-  
-  
-    <!-- /.container -->
+</div>
 
-    <!-- Footer -->
-    <?php require 'footer.php'; ?>
-    </footer>
 
+ <?php } ?>
+	
+	
     <!-- Bootstrap core JavaScript -->
     <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
