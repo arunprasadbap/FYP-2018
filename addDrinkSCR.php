@@ -37,7 +37,7 @@
               <div class="form-group">
                 <label class="col-lg-9 control-label" >Name</label>  
                   <div class="col-lg-9">
-                    <input  name="Name"  required="required" type="text">
+                    <input  name="Name" pattern="[a-zA-Z_ ]+ [a-zA-Z_ ]+ [a-zA-Z_ ]+ [a-zA-Z]+" required title="Alphabets only"  required="required" type="text">
                    </div>
               </div>
                 <div class="form-group">
@@ -68,7 +68,7 @@
     <!-- /.container -->
 
     <!-- Footer -->
-<?php require 'footer.php'; ?>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="jquery/jquery.min.js"></script>
