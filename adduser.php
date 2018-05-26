@@ -14,7 +14,7 @@
 
     <title>Add User Page</title>
 
-    <!-- Bootstrap core CSS -->
+   <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
@@ -27,6 +27,7 @@
 		<!-- Google Fonts -->
 		<link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
 
   </head>
 
@@ -51,7 +52,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+									<input type="text" class="form-control"  name="name" id="name"  placeholder="Enter Name" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -61,7 +62,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+									<input type="text" class="form-control" name="email" id="email"  placeholder="Enter Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required title="use mail pattern e.g. user@mail.com"  required="required"/>
 								</div>
 							</div>
 						</div>
@@ -71,7 +72,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="userid" id="username"  placeholder="Enter your Username"/>
+									<input type="text" class="form-control" pattern="[a-zA-Z0-9]+" required title="can contain only alphanumeric characters" maxlength="9" name="userid" id="username"  placeholder="Enter Username" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -81,7 +82,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+									<input type="password" class="form-control" pattern="[0-9a-zA-Z]{6,}" required title="min 6 characters and can only contain alphanumeric" name="password" id="password"  placeholder="Enter Password" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -91,7 +92,7 @@
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+									<input type="password" class="form-control" pattern="[0-9a-zA-Z]{6,}" required title="min 6 characters and can only contain alphanumeric"  name="confirm" id="confirm"  placeholder="Confirm Password" required="required"/>
 								</div>
 							</div>
 						</div>
@@ -123,7 +124,7 @@ confirm_password.onkeyup = validatePassword;
 </script>
 
     <!-- Footer -->
-    <?php require 'footer.php'; ?>
+    
     </footer>
 
     <!-- Bootstrap core JavaScript -->
