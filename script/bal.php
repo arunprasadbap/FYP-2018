@@ -1,23 +1,27 @@
 <?php
-
 require 'db.php';
 
+
+
+
 $amount = $_SESSION['amount'];
-$result = $mysqli->query("Select * FROM Account WHERE amount = $amount") or die($mysqli->error);
+$userid=$_SESSION['idnum'];
+$result = $mysqli->query("Select amount FROM Account where userid ='$userid'");
 
 
-if($amount<6)
+if (isset($_SESSION['amount']) && $_SESSION['amount'] <6)
 {
-
+    
+    $row=mysqli_fetch_assoc($result);
 	echo ("<SCRIPT LANGUAGE='JavaScript'>
     window.alert('Balance is low, please reload')
-
     </SCRIPT>");
 }
-
+  else
+  {
+      
+  }
         
         
         
-        
-
 ?>
