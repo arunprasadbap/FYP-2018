@@ -16,16 +16,17 @@
 
     <!-- Custom styles for this template -->
     <link href="css/layout.css" rel="stylesheet">
+      
     <link href="css/custom.css" rel="stylesheet">
 
      
-
   </head>
 
   <body class="inner-body">
+      
 
    <div class="login-form">
-    <form action="script/login.php" method="post">
+    <form class="image-panel" action="script/login.php" method="post">
     <?php if(isset($_SESSION['error'])): ?>
         <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']) ?></div>
     <?php endif; ?>
@@ -35,10 +36,10 @@
         
         <h2 class="text-center">Log in</h2>       
         <div class="form-group">
-            <input type="text" class="form-control" name="idnum" placeholder="User ID" required="required">
+            <input type="text" class="form-control"pattern="[a-zA-Z0-9]+" required title="can contain only alphanumeric characters" maxlength="9" name="idnum"  placeholder="User ID" required="required">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" name="pass" placeholder="Password" required="required">
+            <input type="password" class="form-control" pattern="[0-9a-zA-Z]{6,}" required title="min 6 characters and can only contain alphanumeric" name="pass"  placeholder="Password" required="required">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Log in</button>
@@ -50,6 +51,7 @@
     </form>
     
 </div>
+      
 <div style="text-align:center;margin-top:20px;"><h2 style=" text-shadow: 2px 2px #000000;color:#ffffff">TEAM RAT 2018</h2></div>
     <!-- Footer -->
     
@@ -61,3 +63,4 @@
   </body>
 
 </html>
+<
