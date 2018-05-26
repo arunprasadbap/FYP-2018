@@ -46,15 +46,13 @@ require 'script/db.php';
 	<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrdrinks");
 while($row=mysqli_fetch_assoc($fetch)){  
 
-$id=$row['id'];
-$userid=$_SESSION['idnum'];
+
 
 ?>
 
 <div class="gallery">
   <a>
     <img src="images/drink/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="drink" width="300" height="200">
-  </a><form action="addtocart.php" method="post">
   <div class="desc"><h6><?php echo '<b>'.$row['drinks'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['drink_amount']; ?></h6>
  
 	
