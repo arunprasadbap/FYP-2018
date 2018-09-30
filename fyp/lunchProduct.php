@@ -22,8 +22,8 @@ require 'script/db.php';
     <!-- Bootstrap core CSS -->
 	
     
-	
-   
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" >
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -94,16 +94,70 @@ $_SESSION['dropname']='All';
 <div class="gallery" id="galleryy">
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
-  </a><form action="addtocart.php" method="post">
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="fav" onclick="select(this)" style="color:#000000;font-weight: bold;" value="<?php  echo $row['id'];?>" class="btn btn-outline-danger">Add to Favorites</button></a><form action="addtocart.php" method="post">
+ 
+
+   
+  
+
   <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
- <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
+ <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" onclick="notif()" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
-        </button>
+		
+	
 </form>
   </div>
 
 </div>
+<style>
+.btn { 
 
+	width:140px;
+	height:0.5px;
+	 padding: 8px 1px;
+	 font-size: 13px;
+	 margin:4px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #A9A9A9;
+}
+.fa fa-heart-o{
+	 color: orange;
+}
+ 
+
+</style>
+
+<script>
+
+function select(b){
+	
+	//alert(b.value);
+	var name=b.value;
+	
+	b.style.backgroundColor = "E57474";
+	
+
+
+	
+		$.post("addfav.php",{
+			nam:name
+			
+		}, function(data, status){
+			console.log(data);
+			
+			toastr.success(data);	
+			
+		});
+
+toastr.options.newestOnTop = false;
+
+		
+	toastr.options.closeMethod = 'slideUp';
+	
+}
+</script>
 <?php
 } ?>
 	
@@ -113,7 +167,35 @@ $_SESSION['dropname']='All';
 	<?php  if(isset($_GET['idn'])){  
 	
 	?>
+	<script>
+
+function select(b){
 	
+	//alert(b.value);
+	var name=b.value;
+	
+	b.style.backgroundColor = "E57474";
+	
+
+
+	
+		$.post("addfav.php",{
+			nam:name
+			
+		}, function(data, status){
+			console.log(data);
+			
+			toastr.success(data);	
+			
+		});
+
+toastr.options.newestOnTop = false;
+
+		
+	toastr.options.closeMethod = 'slideUp';
+	
+}
+</script>
 		<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE Category='Noodles'");
 while($row=mysqli_fetch_assoc($fetch)){  
 
@@ -125,7 +207,7 @@ $userid=$_SESSION['idnum'];
 <div class="gallery" id="galleryy">
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
-  </a><form action="addtocart.php" method="post">
+  </a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="fav" onclick="select(this)" style="color:#000000;font-weight: bold;" value="<?php  echo $row['id'];?>" class="btn btn-outline-danger">Add to Favorites</button><form action="addtocart.php" method="post">
   <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
@@ -145,6 +227,35 @@ $userid=$_SESSION['idnum'];
 } ?>
 	   
   <?php  if(isset($_GET['idcr'])){  ?>
+  <script>
+
+function select(b){
+	
+	//alert(b.value);
+	var name=b.value;
+	
+	b.style.backgroundColor = "E57474";
+	
+
+
+	
+		$.post("addfav.php",{
+			nam:name
+			
+		}, function(data, status){
+			console.log(data);
+			
+			toastr.success(data);	
+			
+		});
+
+toastr.options.newestOnTop = false;
+
+		
+	toastr.options.closeMethod = 'slideUp';
+	
+}
+</script>
 	
 		<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE Category='Chicken rice'");
 while($row=mysqli_fetch_assoc($fetch)){  
@@ -157,7 +268,7 @@ $userid=$_SESSION['idnum'];
 <div class="gallery" id="galleryy">
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
-  </a><form action="addtocart.php" method="post">
+  </a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="fav" onclick="select(this)" style="color:#000000;font-weight: bold;" value="<?php  echo $row['id'];?>" class="btn btn-outline-danger">Add to Favorites</button><form action="addtocart.php" method="post">
   <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
@@ -179,6 +290,36 @@ $userid=$_SESSION['idnum'];
      
 
   <?php  if(isset($_GET['idc'])){  ?>
+  
+  <script>
+
+function select(b){
+	
+	//alert(b.value);
+	var name=b.value;
+	
+	b.style.backgroundColor = "E57474";
+	
+
+
+	
+		$.post("addfav.php",{
+			nam:name
+			
+		}, function(data, status){
+			console.log(data);
+			
+			toastr.success(data);	
+			
+		});
+
+toastr.options.newestOnTop = false;
+
+		
+	toastr.options.closeMethod = 'slideUp';
+	
+}
+</script>
 	
 		<?php $fetch=mysqli_query($mysqli,"SELECT * FROM scrlunch WHERE Category='Rice choice'");
 while($row=mysqli_fetch_assoc($fetch)){  
@@ -191,7 +332,7 @@ $userid=$_SESSION['idnum'];
 <div class="gallery" id="galleryy">
   <a>
     <img src="images/lunch/<?php echo $row['img']; ?>" id="image" class="img-responsive" alt="lunch" width="300" height="200">
-  </a><form action="addtocart.php" method="post">
+  </a>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="fav" onclick="select(this)" style="color:#000000;font-weight: bold;" value="<?php  echo $row['id'];?>" class="btn btn-outline-danger">Add to Favorites</button><form action="addtocart.php" method="post">
   <div class="desc" id="gal"><h6><?php echo '<b>'.$row['lunch'].'</b>'.'&nbsp;'.'&nbsp;'.'RM'.$row['lunch_amount']; ?></h6>
  <input type="hidden" value="<?php  echo $id;  ?>" name="cartid" ><button type="submit" name="addcartlunch" id="button" class="btn btn-primary showArchived">
          <span class="glyphicon glyphicon-shopping-cart"></span>  <span class="text">ADD TO CART</span>
@@ -220,10 +361,21 @@ $userid=$_SESSION['idnum'];
     </footer>
 
     <!-- Bootstrap core JavaScript -->
+	 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js">
+  </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
      <script src="jquery/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
      <script src="script/ajax-call.js"></script>
-
+<script>
+function notif(){
+	
+toastr.success('working');	
+	toastr.options.closeMethod = 'slideUp';
+}
+</script>
   </body>
 </html>
 <?php else:   
