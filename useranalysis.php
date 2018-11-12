@@ -55,8 +55,10 @@ ob_start(); ?>
     $rows=mysqli_query($mysqli,"select userid,username, ROUND(sum(amount),2) as total_amount from history group by userid
 order by 3 desc limit 10;");
 
-    while($row=mysqli_fetch_assoc($rows)){ ?>
+    while($row=mysqli_fetch_assoc($rows)){
+    $userid=$row['userid'];?>
       <tr>
+          
         <td><?php echo $row['userid']; ?></td>
         <td><?php echo $row['username']; ?></td>
         <td><?php echo $row['total_amount']; ?></td>
@@ -74,19 +76,26 @@ order by 3 desc limit 10;");
                                         <div class="modal-body">
                                             <table class="table table-bordered table-striped">
                                                 <tr>
-                                                    <th>User ID</th>
+                                                    <th>DATE</th>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>food</th>
+            <th>amount</th>
+            
+          </tr>
+          <?php    $fetch=mysqli_query($mysqli,"select * from history where userid='$userid'");
+          
+          while($row=mysqli_fetch_assoc($fetch)){ ?>
+                                                <tr>
+                                                     <td><?php echo $row['time']; ?></td>
                                                     <td><?php echo $row['userid']; ?></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th>Username</th>
                                                     <td><?php echo $row['username']; ?></td>
+                                                      <td><?php echo $row['food']; ?></td>
+                                                       <td><?php echo $row['amount']; ?></td>
                                                 </tr>
-
-                                                <tr>
-                                                    <th>Amount</th>
-                                                    <td><?php echo $row['total_amount']; ?></td>
-                                                </tr>
+                                            <?php }  ?>
+                                                  
+                                                
                                             </table>
                                         </div>
 
