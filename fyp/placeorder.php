@@ -8,6 +8,7 @@ $dbpassword = "cashlesscanteenrat";
 $dbname = "id5215770_cashlesscanteenswin";
 $mysqli = new mysqli ($host, $dbusername, $dbpassword, $dbname);
 $newamountup=0;
+$newquantity=0;
 if(isset($_SESSION['role']) && $_SESSION['role'] ==1);
 date_default_timezone_set("Asia/Kuching");
 $date = date('Y/m/d H:i:s');
@@ -99,6 +100,8 @@ while($row=mysqli_fetch_assoc($fetch)){
 			
 		}
 		if($stalf==4){
+		   	$datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 			$datefound=mysqli_query($mysqli,"SELECT * FROM map WHERE date='$onlydat'");
 						$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 
@@ -133,11 +136,28 @@ mysqli_query($mysqli,"UPDATE overall SET scr='$newamountup' WHERE date='$onlydat
 		mysqli_query($mysqli,"INSERT INTO overall(date,scr)VALUES('$onlydat','$famount')");
 	
 	}
+	//orderanalysis
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['scr'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET scr='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,scr)VALUES('$onlydat','$fquantity')");
+	
+	}
 		}
 	
 //indian
 
 	if($stalf==6){
+	    	    	$datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 	 $datefoundindian=mysqli_query($mysqli,"SELECT * FROM indianreport WHERE date='$onlydat'");
 	 			$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 
@@ -170,11 +190,28 @@ mysqli_query($mysqli,"UPDATE overall SET indian='$newamountup' WHERE date='$only
 		mysqli_query($mysqli,"INSERT INTO overall(date,indian)VALUES('$onlydat','$famount',)");
 	
 	}
+	if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['indian'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET indian='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,indian)VALUES('$onlydat','$fquantity')");
+	
+	}
+	
 	}
 	//indian end
 	
 	//san
 	if($stalf==5){
+	    	$datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 		$datefoundsand=mysqli_query($mysqli,"SELECT * FROM sandwichreport  WHERE date='$onlydat'");
 					$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 
@@ -207,12 +244,30 @@ mysqli_query($mysqli,"UPDATE overall SET sandwich='$newamountup' WHERE date='$on
 		mysqli_query($mysqli,"INSERT INTO overall(date,sandwich)VALUES('$onlydat','$famount',)");
 	
 	}
+	
+	//orderanalysis
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['sandwich'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET sandwich='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,sandwich)VALUES('$onlydat','$fquantity')");
+	
+	}
 	}
 	
 	
 	//laksa
 		
 	if($stalf==1){
+	    	   $datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 		$datefoundlaksa=mysqli_query($mysqli,"SELECT * FROM laksareport  WHERE date='$onlydat'");
 			$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 	if(mysqli_num_rows($datefoundlaksa)==1){
@@ -244,7 +299,20 @@ mysqli_query($mysqli,"UPDATE overall SET laksa='$newamountup' WHERE date='$onlyd
 		mysqli_query($mysqli,"INSERT INTO overall(date,laksa)VALUES('$onlydat','$famount',)");
 	
 	}
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['laksa'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET laksa='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,laksa)VALUES('$onlydat','$fquantity')");
 	
+	}
 	
 	}
 	
@@ -324,6 +392,8 @@ while($row=mysqli_fetch_assoc($fetch)){
 			
 		}
 			if($stalf==4){
+		$datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 	$datefound=mysqli_query($mysqli,"SELECT * FROM map WHERE date='$onlydat'");
 	$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 
@@ -357,11 +427,28 @@ mysqli_query($mysqli,"UPDATE overall SET scr='$newamountup' WHERE date='$onlydat
 		mysqli_query($mysqli,"INSERT INTO overall(date,scr)VALUES('$onlydat','$famount')");
 	
 	}
+		//orderanalysis
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['scr'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET scr='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,scr)VALUES('$onlydat','$fquantity')");
+	
+	}
 			}
 			
 			
 	//indian
 	if($stalf==6){
+	    $datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 		$datefoundindian=mysqli_query($mysqli,"SELECT * FROM indianreport WHERE date='$onlydat'");
 			$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 
@@ -394,6 +481,20 @@ mysqli_query($mysqli,"UPDATE overall SET indian='$newamountup' WHERE date='$only
 		mysqli_query($mysqli,"INSERT INTO overall(date,indian)VALUES('$onlydat','$famount',)");
 	
 	}
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['indian'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET indian='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,indian)VALUES('$onlydat','$fquantity')");
+	
+	}
 	
 	
 	
@@ -404,6 +505,7 @@ mysqli_query($mysqli,"UPDATE overall SET indian='$newamountup' WHERE date='$only
 		//san
 	if($stalf==5){
 		$datefoundsand=mysqli_query($mysqli,"SELECT * FROM sandwichreport  WHERE date='$onlydat'");
+		$datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
 			$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 	if(mysqli_num_rows($datefoundsand)==1){
 			echo "found";
@@ -416,6 +518,7 @@ mysqli_query($mysqli,"UPDATE sandwichreport SET amount='$newamountup' WHERE date
 
 	}else{	
 		mysqli_query($mysqli,"INSERT INTO sandwichreport(date,stall,amount,food,user)VALUES('$onlydat','$stalf','$famount','$fname','$id')");
+		
 	
 	}
 	
@@ -434,12 +537,29 @@ mysqli_query($mysqli,"UPDATE overall SET sandwich='$newamountup' WHERE date='$on
 		mysqli_query($mysqli,"INSERT INTO overall(date,sandwich)VALUES('$onlydat','$famount',)");
 	
 	}
+	//orderanalysis
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['sandwich'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET sandwich='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,sandwich)VALUES('$onlydat','$fquantity')");
+	
+	}
 	
 	
 	}
 	//laksa
 		
 	if($stalf==1){
+	    		$datefoundsandorder=mysqli_query($mysqli,"SELECT * FROM orderanalysis  WHERE date='$onlydat'");
+
 		$datefoundlaksa=mysqli_query($mysqli,"SELECT * FROM laksareport  WHERE date='$onlydat'");
 			$datefoundoverall=mysqli_query($mysqli,"SELECT * FROM overall WHERE date='$onlydat'");
 	if(mysqli_num_rows($datefoundlaksa)==1){
@@ -472,7 +592,20 @@ mysqli_query($mysqli,"UPDATE overall SET laksa='$newamountup' WHERE date='$onlyd
 	
 	}
 	
+		if(mysqli_num_rows($datefoundsandorder)==1){
+			echo "found";
+		while($row4=mysqli_fetch_assoc($datefoundsandorder)){
+		
+			$newquantity=$fquantity+$row4['laksa'];
+			
+		}
+mysqli_query($mysqli,"UPDATE orderanalysis SET laksa='$newquantity' WHERE date='$onlydat'");
+
+
+	}else{	
+			mysqli_query($mysqli,"INSERT INTO orderanalysis(date,laksa)VALUES('$onlydat','$fquantity')");
 	
+	}
 	}
 	
 	// end
