@@ -235,7 +235,7 @@ $quantitybreak=$row['quantity'];
 
 $stall=4;
 
-if($quantitybreak > 0){
+if($quantitybreak > 1){
 
 $fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE name_food='$breakname' AND user_id='$userid'");
 
@@ -325,7 +325,7 @@ mysqli_query($mysqli,"INSERT INTO cart(user_id,user_name,id_food,name_food,amoun
 
 
 
-header("location:bfastProduct.php?ofs=1");
+header("location:bfastProduct.php?ofs=2");
 
 
 
@@ -363,7 +363,7 @@ $quantitylunch=$row['quantity'];
 
 $stall=4;
 
-if($quantitylunch > 0){
+if($quantitylunch > 1){
 
 $fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE name_food='$lunchname' AND user_id='$userid'");
 
@@ -453,7 +453,7 @@ mysqli_query($mysqli,"INSERT INTO cart(user_id,user_name,id_food,name_food,amoun
 
 
 
-header("location:lunchProduct.php?ofsl=1");
+header("location:lunchProduct.php?ofsl=3");
 
 
 
@@ -587,9 +587,110 @@ mysqli_query($mysqli,"INSERT INTO cart(user_id,user_name,id_food,name_food,amoun
 
 }
 
+//laksa
+
+if(isset($_POST['laksabut'])){
+	$realamount=0;
+
+	$real=0;
+	$id=$_POST['laksaid'];
+	$quantity=1;
+
+	$userid=$_SESSION['idnum'];
+	$username=$_SESSION['username'];
+echo $id;
+	$fetch=mysqli_query($mysqli,"SELECT * FROM Laksa WHERE ID='$id'");
+	$fetch1=mysqli_query($mysqli,"SELECT FoodPrice FROM Laksa WHERE ID='$id'");
+
+	$row=mysqli_fetch_assoc($fetch); 
+	$row1=mysqli_fetch_assoc($fetch1); 
+	$userid=$_SESSION['idnum'];
+	$name=$row['FoodName'];
+	$nameamount = $row['FoodPrice']; 
+	$realamount = $realamount + $row['FoodPrice'];
+	
+	$type=$row['type'];
+
+	$stall=1;
+		
+	$fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE name_food='$name' AND user_id='$userid'");
+
+	if(mysqli_num_rows($fetch)==1){
+		$row=mysqli_fetch_assoc($fetch);
+		$row['foodQuantity'];
+		$food=$row['FoodPrice'];
+		$new=$row['foodQuantity']+1;
+		$singleamount=$row['FoodPrice'];
+		$food=$row['FoodPrice'];
+		$food=$food+$singleamount;
+
+		mysqli_query($mysqli,"UPDATE cart SET quantity='$new', amount_food='$food' WHERE name_food='$name' AND user_id='$userid'");
+		header("location:productLaksa.php");
+	}else{
+		mysqli_query($mysqli,"INSERT INTO cart(user_id,user_name,id_food,name_food,amount_food,stall,quantity,price)VALUES('$userid','$username','$id','$name','$realamount','$stall',1,'$realamount')");
+		
+		header("location:productLaksa.php");
+	}
 
 
 
+}
+
+
+/*tahsin code*/
+if(isset($_POST['addToSanCart'])){
+	$realamount=0;
+
+	$real=0;
+	$id=$_POST['card_id'];
+	$quantity=1;
+
+	$userid=$_SESSION['idnum'];
+	$username=$_SESSION['username'];
+
+	$fetch=mysqli_query($mysqli,"SELECT * FROM sandwich WHERE id='$id'");
+	$fetch1=mysqli_query($mysqli,"SELECT amount FROM sandwich WHERE id='$id'");
+
+	$row=mysqli_fetch_assoc($fetch); 
+	$row1=mysqli_fetch_assoc($fetch1); 
+	$userid=$_SESSION['idnum'];
+	$name=$row['name'];
+	$nameamount = $row['amount']; 
+	$realamount = $realamount + $row['amount'];
+	
+	
+	$type=$row['type'];
+    $quantitysandwich = $row['quantity'];
+	$stall=5;
+	if ( $quantitysandwich > 0){
+	$fetch=mysqli_query($mysqli,"SELECT * FROM cart WHERE name_food='$name' AND user_id='$userid'");
+
+	if(mysqli_num_rows($fetch)==1){
+	    echo "error";
+		$row=mysqli_fetch_assoc($fetch);
+		$row['quantity'];
+		$food=$row['amount_food'];
+		$new=$row['quantity']+1;
+		$singleamount=$row['price'];
+		$food=$row['amount_food'];
+		$food=$food+$singleamount;
+
+		mysqli_query($mysqli,"UPDATE cart SET quantity='$new', amount_food='$food' WHERE name_food='$name' AND user_id='$userid'");
+	}else{
+		mysqli_query($mysqli,"INSERT INTO cart(user_id,user_name,id_food,name_food,amount_food,stall,quantity,price)VALUES('$userid','$username','$id','$name','$realamount','$stall',1,'$realamount')");
+	}
+
+	if($type=='veg'){
+		header("location:sanItemList.php?type=veg");  
+	}else{
+		header("location:sanItemList.php?type=non_veg"); 
+	}
+}else{
+    
+    header("location:sandwichIndex.php?ofs=1");
+}
+
+}
 
 
 
